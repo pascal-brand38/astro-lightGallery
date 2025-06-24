@@ -15,5 +15,18 @@
   "bugs": {
     "url": "https://github.com/pascal-brand38/astro-lightGallery/issues"
   },
-  "homepage": "https://github.com/pascal-brand38/astro-lightGallery#readme"
+  "homepage": "https://github.com/pascal-brand38/astro-lightGallery#readme",
+  "dependencies": {
+    "lightgallery": "^2.9.0-beta.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "astro": "^5.9.2",
+    "typescript": "^5.8.3"
+  },
+  "exports": "./index.ts",
+  "files": [
+    "index.ts",
+    "src/**"
+  ]
 }

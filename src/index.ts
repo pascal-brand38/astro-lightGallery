@@ -2,7 +2,7 @@
 // MIT License
 
 import ligthGallery from 'lightgallery'
-import type { LightGallerySettings } from 'lightgallery/types'
+// import type { LightGallerySettings } from 'lightgallery/types'
 import type { LightGallerySettings } from 'lightgallery/lg-settings';
 import type { HTMLAttributes } from 'astro/types'
 import type { LgQuery } from 'lightgallery/lgQuery'
