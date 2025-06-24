@@ -1,0 +1,89 @@
+---
+// Copyright (c) Pascal Brand
+// MIT License
+
+import "lightgallery/css/lightgallery-bundle.css"
+
+import type { AstroLightGalleryType } from '../index'
+
+type Props = AstroLightGalleryType
+
+
+const {
+  options={},
+  class: className = '',
+  ...props
+} = Astro.props;
+
+
+---
+
+<astro-lightgallery id="mygal"
+  class={className}
+  {...props}
+  data-options={JSON.stringify(options)}
+  >
+    <slot />
+</div>
+
+
+<script>
+  import { createLightGallery } from '../index'
+  import type { LightGallerySettings } from 'lightgallery/lg-settings';
+
+  class AstroLightGallery extends HTMLElement {
+    constructor() {
+      super();
+
+      // Read the message from the data attribute.
+      const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
+
+      createLightGallery('mygal', options)
+    }
+  }
+
+  customElements.get('astro-lightgallery') || customElements.define('astro-lightgallery', AstroLightGallery);
+
+  // import ligthGallery from 'lightgallery'
+  // // import type LightGallery from 'lightgallery'
+  // import type { LgQuery } from 'lightgallery/lgQuery'
+  // type LightGallery = import('lightgallery/lightgallery.d.ts').LightGallery;
+
+  // // import autoplay from 'lightgallery/plugins/autoplay'
+  // // import comment from 'lightgallery/plugins/comment'
+  // // import fullscreen from 'lightgallery/plugins/fullscreen'
+  // // import hash from 'lightgallery/plugins/hash'
+  // // import mediumZoom from 'lightgallery/plugins/mediumZoom'
+  // // import pager from 'lightgallery/plugins/pager'
+  // // import relativeCaption from 'lightgallery/plugins/relativeCaption'
+  // // import rotate from 'lightgallery/plugins/rotate'
+  // // import share from 'lightgallery/plugins/share'
+  // // import thumbnail from 'lightgallery/plugins/thumbnail'
+  // // import video from 'lightgallery/plugins/video'
+  // // import vimeoThumbnail from 'lightgallery/plugins/vimeoThumbnail'
+  // // import zoom from 'lightgallery/plugins/zoom'
+
+  // import thumbnaill from 'lightgallery/plugins/thumbnail'
+
+  // const plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[]  = []
+  // if (true) {
+  //   const str = 'lg-thumbnail.min.js'
+  //   const plugin = await import('lightgallery/plugins/thumbnail/' + 'lg-thumbnail.min.js')
+  //   plugins.push(plugin.default)
+  // } else {
+  //   plugins.push(thumbnaill)
+  // }
+
+  // console.log(`plugins initialized to ${plugins}`)
+  // const el = document.getElementById('mygal')
+  // if (el) {
+  //   ligthGallery(el, {
+  //     speed: 500,
+  //     // plugins: plugins,
+  //     // plugins: [
+  //     //   thumbnail,
+  //     // ],
+  //     thumbnail: true,
+  //   });
+  // }
+</script>
