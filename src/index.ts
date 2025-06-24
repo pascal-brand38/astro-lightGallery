@@ -18,10 +18,10 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    */
   options?: LightGallerySettings,
 
-  /** unique class to be able to retrieve the lightgallery instance, if required
+  /** unique id to be able to retrieve the lightgallery instance
    * When undefined, an automatic unique id name is provided
    */
-  // uniqueClass?: string,
+  uniqueId?: string,
 
   /** a thumbnail slider is build, this parameter is provided on the main slider
    * (the one with big slides, not the one to track the progress) and equal

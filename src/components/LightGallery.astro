@@ -10,18 +10,20 @@ type Props = AstroLightGalleryType
 
 
 const {
-  options={},
-  class: className = '',
+  options = {},
+  uniqueId = 'astro-lightgallery-' + Math.random().toString(36).slice(2, 11),
+  id='',
   ...props
 } = Astro.props;
 
 
 ---
 
-<astro-lightgallery id="mygal"
-  class={className}
+<astro-lightgallery
+  id={`${uniqueId} ${id}`}
   {...props}
   data-options={JSON.stringify(options)}
+  data-uniqueid={uniqueId}
   >
     <slot />
 </div>
@@ -37,8 +39,9 @@ const {
 
       // Read the message from the data attribute.
       const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
+      const uniqueId = this.dataset.uniqueId || ''
 
-      createLightGallery('mygal', options)
+      createLightGallery(uniqueId, options)
     }
   }
 
