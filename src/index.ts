@@ -2,7 +2,6 @@
 // MIT License
 
 import ligthGallery from 'lightgallery'
-// import type { LightGallerySettings } from 'lightgallery/types'
 import type { LightGallerySettings } from 'lightgallery/lg-settings';
 import type { HTMLAttributes } from 'astro/types'
 import type { LgQuery } from 'lightgallery/lgQuery'
@@ -14,7 +13,7 @@ type LightGallery = import('lightgallery/lightgallery.d.ts').LightGallery;
  */
 export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
   /** lightgallery options, to set autoplay, navigation, thumbnails,...
-   * check fullset of options: TODO
+   * check fullset of options: https://www.lightgalleryjs.com/docs/settings
    */
   options?: LightGallerySettings,
 
@@ -22,12 +21,6 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    * When undefined, an automatic unique id name is provided
    */
   uniqueId?: string,
-
-  /** a thumbnail slider is build, this parameter is provided on the main slider
-   * (the one with big slides, not the one to track the progress) and equal
-   * the unique class of the thumbnail slider
-   */
-  // linkToThumbUniqueClass?: string,
 }
 
 
