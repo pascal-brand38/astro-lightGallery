@@ -17,12 +17,7 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    */
   options?: LightGallerySettings,
 
-  /** unique id to be able to retrieve the lightgallery instance
-   * When undefined, an automatic unique id name is provided
-   */
-  uniqueId?: string,
 }
-
 
 /** astro components exported, used to create a lightgallery */
 export { default as LightGallery } from './components/LightGallery.astro'
@@ -41,3 +36,17 @@ export async function createLightGallery(id: string, options: LightGallerySettin
     ligthGallery(el, options)
   }
 }
+
+// other plugins to consider:
+// import autoplay from 'lightgallery/plugins/autoplay'
+// import comment from 'lightgallery/plugins/comment'
+// import fullscreen from 'lightgallery/plugins/fullscreen'
+// import hash from 'lightgallery/plugins/hash'
+// import mediumZoom from 'lightgallery/plugins/mediumZoom'
+// import pager from 'lightgallery/plugins/pager'
+// import relativeCaption from 'lightgallery/plugins/relativeCaption'
+// import rotate from 'lightgallery/plugins/rotate'
+// import share from 'lightgallery/plugins/share'
+// import video from 'lightgallery/plugins/video'
+// import vimeoThumbnail from 'lightgallery/plugins/vimeoThumbnail'
+// import zoom from 'lightgallery/plugins/zoom'
