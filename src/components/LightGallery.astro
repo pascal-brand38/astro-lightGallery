@@ -11,6 +11,7 @@ type Props = AstroLightGalleryType
 
 const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
+  addPlugins = [],
   id = 'astro-lightgallery-' + Math.random().toString(36).slice(2, 11),
   ...props
 } = Astro.props;
@@ -23,6 +24,7 @@ const {
   {...props}
   data-options={JSON.stringify(options)}
   data-id={id}
+  data-addplugins={JSON.stringify(addPlugins)}
   >
     <slot />
 </div>
@@ -39,8 +41,8 @@ const {
       // Read the message from the data attribute.
       const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
       const id = this.dataset.id || ''
-
-      createLightGallery(id, options)
+      const addPlugins: string[] = JSON.parse(this.dataset.addplugins || '{}')
+      createLightGallery(id, options, addPlugins)
     }
   }
 
