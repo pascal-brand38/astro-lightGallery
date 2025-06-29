@@ -1,6 +1,6 @@
 {
   "name": "astro-lightgallery",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries for the web and the mobile",
   "main": "index.js",
   "scripts": {
