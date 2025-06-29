@@ -1,7 +1,7 @@
 {
   "name": "astro-lightgallery",
   "version": "0.2.0",
-  "description": "",
+  "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries for the web and the mobile",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -28,5 +28,15 @@
   "files": [
     "index.ts",
     "src/**"
+  ],
+  "keywords": [
+    "lightgallery",
+    "withastro",
+    "astro-component",
+    "gallery",
+    "galleries",
+    "lightweight",
+    "touch",
+    "responsive"
   ]
 }
