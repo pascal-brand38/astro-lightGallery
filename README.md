@@ -15,7 +15,7 @@
   [Demo](https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery)
 
   <a href="https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery" target="_blank">
-    <img src="images/astro-lightgallery.gif">
+    <img src="images/astro-lightGallery.gif">
   </a>
 
 </div>
