@@ -1,0 +1,64 @@
+/*
+  Copyright (c) Pascal Brand
+  MIT License
+
+  Inspired from
+      https://codepen.io/maxvoltar/pen/eYOPdMG
+      https://css-tricks.com/adaptive-photo-layout-with-flexbox/
+*/
+
+
+.astro-lightgallery-adaptive-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.astro-lightgallery-adaptive-item {
+  height: 40vh;
+  flex-grow: 1;
+}
+
+.astro-lightgallery-adaptive-item:last-child {
+  /* There's no science in using "10" here. In all my testing, this delivered the best results. */
+  flex-grow: 10;
+}
+
+.astro-lightgallery-adaptive-item img {
+  max-height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .astro-lightgallery-adaptive-item {
+    height: 30vh;
+  }
+}
+
+/* Short screens */
+
+@media (max-height: 480px) {
+  .astro-lightgallery-adaptive-item {
+    height: 80vh;
+  }
+}
+
+/* Smaller screens in portrait */
+
+@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+  .astro-lightgallery-adaptive-container {
+    flex-direction: row;
+  }
+
+  .astro-lightgallery-adaptive-item {
+    height: auto;
+    width: 100%;
+  }
+  .astro-lightgallery-adaptive-item img {
+    width: 100%;
+    max-height: 75vh;
+    min-width: 0;
+  }
+}

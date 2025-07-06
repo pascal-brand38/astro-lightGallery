@@ -24,7 +24,10 @@
     "astro": "^5.9.2",
     "typescript": "^5.8.3"
   },
-  "exports": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./css/*.css": "./src/css/*.css"
+  },
   "files": [
     "index.ts",
     "src/**"
