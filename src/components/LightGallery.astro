@@ -3,31 +3,59 @@
 // MIT License
 
 import "lightgallery/css/lightgallery-bundle.css"
+import 'astro-lightgallery/css/adaptive.css'
 
 import type { AstroLightGalleryType } from '../index'
 
 type Props = AstroLightGalleryType
 
-
 const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
   id = 'astro-lightgallery-' + Math.random().toString(36).slice(2, 11),
+  layout,
   ...props
 } = Astro.props;
 
-
 ---
+<!-- slot is provided, that means that the user is using his gallery layout
+     only provide lightgallery setup
+  -->
+{ Astro.slots.has('default') && (
 
-<astro-lightgallery
-  id={id}
-  {...props}
-  data-options={JSON.stringify(options)}
-  data-id={id}
-  data-addplugins={JSON.stringify(addPlugins)}
-  >
-    <slot />
-</div>
+  <astro-lightgallery
+    id={id}
+    {...props}
+    data-options={JSON.stringify(options)}
+    data-id={id}
+    data-addplugins={JSON.stringify(addPlugins)}
+    >
+      <slot />
+  </astro-lightgallery>
+) }
+
+<!-- slot is not provided, that means that the user is using the gallery layout of astro-gallery
+     the description of this layout is provided in layout, including the images
+  -->
+
+{ !Astro.slots.has('default') && (layout !== undefined) && (
+  <astro-lightgallery
+    id={id}
+    {...props}
+    data-options={JSON.stringify(options)}
+    data-id={id}
+    data-addplugins={JSON.stringify(addPlugins)}
+    >
+
+    {
+      layout.imgs.map(img => (
+        <a class="astro-lightgallery-adaptive-item" href={img.src}>
+            <img src={img.src} />
+        </a>
+      ))
+    }
+  </astro-lightgallery>
+) }
 
 
 <script>

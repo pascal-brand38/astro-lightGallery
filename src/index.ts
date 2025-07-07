@@ -37,6 +37,16 @@ import type { RelativeCaptionSettings } from 'lightgallery/plugins/relativeCapti
 import type { VimeoThumbnailSettings } from 'lightgallery/plugins/vimeoThumbnail/lg-vimeo-thumbnail-settings';
 type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSettings & VimeoThumbnailSettings;
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
+/** TODO */
+export interface AstroLightGalleryImgType {
+  /** TODO */
+  src: string,
+}
+
+export interface AstroLightGalleryLayoutType {
+  /** TODO */
+  imgs: AstroLightGalleryImgType[],
+}
 
 /** properties passed to the <LightGallery> component
  * It extends a div (that is may have class, style,...), plus other attributes
@@ -47,7 +57,11 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    */
   options?: LightGallerySettings | LightGallerySettingsFix,
 
+  /** TODO */
   addPlugins?: pluginStrType[],
+
+  /** TODO */
+  layout?: AstroLightGalleryLayoutType,
 }
 
 /** astro components exported, used to create a lightgallery */
