@@ -13,6 +13,7 @@ const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
   id = 'astro-lightgallery-' + Math.random().toString(36).slice(2, 11),
+  class: className = '',
   layout,
   ...props
 } = Astro.props;
@@ -25,6 +26,7 @@ const {
 
   <astro-lightgallery
     id={id}
+    class={className}
     {...props}
     data-options={JSON.stringify(options)}
     data-id={id}
@@ -41,6 +43,7 @@ const {
 { !Astro.slots.has('default') && (layout !== undefined) && (
   <astro-lightgallery
     id={id}
+    class={`astro-lightgallery-adaptive-container ${className}`}
     {...props}
     data-options={JSON.stringify(options)}
     data-id={id}
