@@ -63,6 +63,7 @@ const {
 
 <script>
   import { createLightGallery } from '../index'
+  import type { AstroLightGalleryPluginStrType } from '../index'
   import type { LightGallerySettings } from 'lightgallery/lg-settings';
 
   class AstroLightGallery extends HTMLElement {
@@ -72,7 +73,7 @@ const {
       // Read the message from the data attribute.
       const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
       const id = this.dataset.id || ''
-      const addPlugins: string[] = JSON.parse(this.dataset.addplugins || '{}')
+      const addPlugins: AstroLightGalleryPluginStrType[] = JSON.parse(this.dataset.addplugins || '{}')
       createLightGallery(id, options, addPlugins)
     }
   }

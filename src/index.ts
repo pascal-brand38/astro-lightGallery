@@ -7,7 +7,7 @@ import type { HTMLAttributes } from 'astro/types'
 import type { LgQuery } from 'lightgallery/lgQuery'
 type LightGallery = import('lightgallery/lightgallery.d.ts').LightGallery;
 
-type pluginStrType = (
+export type AstroLightGalleryPluginStrType = (
   'thumbnail' |
   'autoplay' |
   'comment' |
@@ -58,7 +58,7 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
   options?: LightGallerySettings | LightGallerySettingsFix,
 
   /** TODO */
-  addPlugins?: pluginStrType[],
+  addPlugins?: AstroLightGalleryPluginStrType[],
 
   /** TODO */
   layout?: AstroLightGalleryLayoutType,
