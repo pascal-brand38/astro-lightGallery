@@ -46,6 +46,9 @@ export interface AstroLightGalleryImgType {
 export interface AstroLightGalleryLayoutType {
   /** TODO */
   imgs: AstroLightGalleryImgType[],
+  adaptive?: {
+    zoom?:number,
+  }
 }
 
 /** properties passed to the <LightGallery> component
