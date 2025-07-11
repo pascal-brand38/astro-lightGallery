@@ -23,6 +23,21 @@ type pluginStrType = (
   'zoom'
   )
 
+/**
+ * Fix in atro-lightgallery missing plugin settings in LightGallerySettings
+ * TODO: Once fixed in lightgallery (cf. PR https://github.com/sachinchoolur/lightGallery/pull/1724),
+ * LightGallerySettingsFix can be removed from options types.
+ *
+ * This new type LightGallerySettingsFix is not exported on purpose, to avoid
+ * using it directly as it should be removed once lightgallery is updated.
+ * LightGallerySettings must be used instead in external applications
+ */
+import type { LightGalleryAllSettings } from 'lightgallery/lg-settings';
+import type { RelativeCaptionSettings } from 'lightgallery/plugins/relativeCaption/lg-relative-caption-settings';
+import type { VimeoThumbnailSettings } from 'lightgallery/plugins/vimeoThumbnail/lg-vimeo-thumbnail-settings';
+type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSettings & VimeoThumbnailSettings;
+type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
+
 /** properties passed to the <LightGallery> component
  * It extends a div (that is may have class, style,...), plus other attributes
  */
@@ -30,7 +45,7 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
   /** lightgallery options, to set autoplay, navigation, thumbnails,...
    * check fullset of options: https://www.lightgalleryjs.com/docs/settings
    */
-  options?: LightGallerySettings,
+  options?: LightGallerySettings | LightGallerySettingsFix,
 
   addPlugins?: pluginStrType[],
 }
