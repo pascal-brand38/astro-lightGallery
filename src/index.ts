@@ -38,10 +38,19 @@ import type { VimeoThumbnailSettings } from 'lightgallery/plugins/vimeoThumbnail
 type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSettings & VimeoThumbnailSettings;
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
 
-/** TODO */
+/** List of images, and their attributes, to be displayed in a provided layout */
 export interface AstroLightGalleryImgType {
-  /** TODO */
+  /** the source of the large image */
   src: string,
+
+  /** the source of the thumbnail image. If not provided, use src (the large one) */
+  srcThumb?: string
+
+  /** alt of the image */
+  alt?: string
+
+  /* caption for the slide, if any */
+  subHtml?:string
 }
 
 /** Layout parameters, when the user wants to use an existing layout
@@ -55,7 +64,9 @@ export interface AstroLightGalleryLayoutType {
 
   /** adaptive layout parameters. This is the default layout */
   adaptive?: {
-    /** TODO */
+    /** zoom factor (100 by default) to enlarge or reduce the gallery
+     * with respect to the original size provided by the layout
+     */
     zoom?:number,
   }
 
@@ -78,10 +89,16 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    */
   options?: LightGallerySettings | LightGallerySettingsFix,
 
-  /** TODO */
+  /** plugins to be added manually (such as zoom).
+   * note that when possible, the plugins are automatically detected
+   * (for example when thumbnail=true in the options)
+   */
   addPlugins?: AstroLightGalleryPluginStrType[],
 
-  /** TODO */
+  /** to ease user experience, some default layouts are provided.
+   * This ease the lightgallery usage, as only the image list and their attributes
+   * has to be provided
+   */
   layout?: AstroLightGalleryLayoutType,
 }
 

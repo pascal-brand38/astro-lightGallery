@@ -18,9 +18,21 @@ const {
   ...props
 } = Astro.props;
 
-const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : undefined    // remove imgs from layout
+const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : {}    // remove imgs from layout
 const classContainer = (layout && layout.classContainer) ? layout.classContainer : ''
 const classItem = (layout && layout.classItem) ? layout.classItem : ''
+
+// update missing informations (if any) in layout.imgs
+if (layout) {
+  layout.imgs.forEach(img => {
+    if (!img.srcThumb) {
+      img.srcThumb = img.src
+    }
+    if (!img.alt) {
+      img.alt = ''
+    }
+  })
+}
 
 ---
 <!-- slot is provided, that means that the user is using his gallery layout
@@ -58,10 +70,12 @@ const classItem = (layout && layout.classItem) ? layout.classItem : ''
 
     {
       // TODO: also use Image from astro
-      // TODO: add small images, alt,...
       layout.imgs.map(img => (
-        <a class={`astro-lightgallery-adaptive-item ${classItem}`} href={img.src}>
-            <img src={img.src} />
+        <a
+          class={`astro-lightgallery-adaptive-item ${classItem}`}
+          href={img.src}
+          data-sub-html={(img.subHtml ? img.subHtml : '')}>
+            <img src={img.srcThumb} alt={img.alt} />
         </a>
       ))
     }
@@ -85,12 +99,11 @@ const classItem = (layout && layout.classItem) ? layout.classItem : ''
       const paramLayout = JSON.parse(this.dataset.paramLayout!)
       createLightGallery(id, options, addPlugins)
 
+      const elm = document.querySelector<HTMLElement>(`#${id}`)!;
       if ((paramLayout.adaptive !== undefined) && (paramLayout.adaptive.zoom !== undefined)) {
-        const elm = document.querySelector<HTMLElement>('.astro-lightgallery-adaptive-container')!;
-        console.log(`PASCAL: paramLayout.adaptive.zoom.toString()`)
         elm.style.setProperty("--zoom", paramLayout.adaptive.zoom.toString());
       } else {
-        console.log('NO paramLayout')
+        elm.style.setProperty("--zoom", "100");
       }
     }
   }

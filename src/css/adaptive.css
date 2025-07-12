@@ -8,17 +8,13 @@
 */
 
 .astro-lightgallery-adaptive-container {
-  --zoom: 100;
-}
-
-.astro-lightgallery-adaptive-container {
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
 }
 
 .astro-lightgallery-adaptive-item {
-  height: calc(20vh * var(--zoom) / 100);
+  height: calc(20vh * var(--zoom, 100) / 100);
   flex-grow: 1;
 }
 
@@ -36,7 +32,7 @@
 
 @media (max-aspect-ratio: 1/1) {
   .astro-lightgallery-adaptive-item {
-    height: calc(15vh * var(--zoom) / 100);
+    height: calc(15vh * var(--zoom, 100) / 100);
   }
 }
 
@@ -44,7 +40,7 @@
 
 @media (max-height: 480px) {
   .astro-lightgallery-adaptive-item {
-    height: calc(40vh * var(--zoom) / 100)
+    height: calc(40vh * var(--zoom, 100) / 100)
   }
 }
 
@@ -61,7 +57,7 @@
   }
   .astro-lightgallery-adaptive-item img {
     width: 100%;
-    max-height: calc(37vh * var(--zoom) / 100);
+    max-height: calc(37vh * var(--zoom, 100) / 100);
     min-width: 0;
   }
 }
