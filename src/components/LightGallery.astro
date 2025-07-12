@@ -18,9 +18,9 @@ const {
   ...props
 } = Astro.props;
 
-const paramLayout = {
-  adaptive: layout ? layout.adaptive : undefined,
-}
+const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : undefined    // remove imgs from layout
+const classContainer = (layout && layout.classContainer) ? layout.classContainer : ''
+const classItem = (layout && layout.classItem) ? layout.classItem : ''
 
 ---
 <!-- slot is provided, that means that the user is using his gallery layout
@@ -48,7 +48,7 @@ const paramLayout = {
 { !Astro.slots.has('default') && (layout !== undefined) && (
   <astro-lightgallery
     id={id}
-    class={`astro-lightgallery-adaptive-container ${className}`}
+    class={`astro-lightgallery-adaptive-container ${className} ${classContainer}`}
     {...props}
     data-options={JSON.stringify(options)}
     data-id={id}
@@ -57,8 +57,10 @@ const paramLayout = {
     >
 
     {
+      // TODO: also use Image from astro
+      // TODO: add small images, alt,...
       layout.imgs.map(img => (
-        <a class="astro-lightgallery-adaptive-item" href={img.src}>
+        <a class={`astro-lightgallery-adaptive-item ${classItem}`} href={img.src}>
             <img src={img.src} />
         </a>
       ))
@@ -79,8 +81,8 @@ const paramLayout = {
       // Read the message from the data attribute.
       const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
       const id = this.dataset.id || ''
-      const addPlugins: AstroLightGalleryPluginStrType[] = JSON.parse(this.dataset.addplugins) || []
-      const paramLayout = JSON.parse(this.dataset.paramLayout) || {}
+      const addPlugins: AstroLightGalleryPluginStrType[] = JSON.parse(this.dataset.addplugins!)
+      const paramLayout = JSON.parse(this.dataset.paramLayout!)
       createLightGallery(id, options, addPlugins)
 
       if ((paramLayout.adaptive !== undefined) && (paramLayout.adaptive.zoom !== undefined)) {
@@ -92,7 +94,6 @@ const paramLayout = {
       }
     }
   }
-
 
   customElements.get('astro-lightgallery') || customElements.define('astro-lightgallery', AstroLightGallery);
 </script>

@@ -37,18 +37,36 @@ import type { RelativeCaptionSettings } from 'lightgallery/plugins/relativeCapti
 import type { VimeoThumbnailSettings } from 'lightgallery/plugins/vimeoThumbnail/lg-vimeo-thumbnail-settings';
 type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSettings & VimeoThumbnailSettings;
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
+
 /** TODO */
 export interface AstroLightGalleryImgType {
   /** TODO */
   src: string,
 }
 
+/** Layout parameters, when the user wants to use an existing layout
+ * for the whole gallery.
+ * It contains the images of the gallery, the parameters of the chosen
+ * layout, ...
+ */
 export interface AstroLightGalleryLayoutType {
-  /** TODO */
+  /** images to be displayed in the gallery */
   imgs: AstroLightGalleryImgType[],
+
+  /** adaptive layout parameters. This is the default layout */
   adaptive?: {
+    /** TODO */
     zoom?:number,
   }
+
+  /** classContainer, to be defined by the user in case he wants
+   * to enrich the layout default container
+   */
+  classContainer?: string,
+
+  /** classItem to be defined by the user in case he wants
+   * to enrich the layout default item, for example with hover effect... */
+  classItem?: string,
 }
 
 /** properties passed to the <LightGallery> component
@@ -81,7 +99,7 @@ function _textColor(text: string, color: string) {
   return colorCode + text + '\x1b[0m'
 }
 
-async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[], pluginStr: pluginStrType) {
+async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[], pluginStr: AstroLightGalleryPluginStrType) {
   console.log(_textColor(`astro-lightgallery: add plugin ${pluginStr}`, 'FgGreen'))
   let plugin= undefined
   switch (pluginStr) {
@@ -133,7 +151,7 @@ async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) =
   }
 }
 
-export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: pluginStrType[]) {
+export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: AstroLightGalleryPluginStrType[]) {
   const plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[] = []
   const el = document.getElementById(id)
   if (el) {
