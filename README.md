@@ -12,6 +12,11 @@
     building beautiful image and video galleries for the web and the mobile
   </p>
 
+  <p>
+    It includes some layouts to ease integration of
+    lightgallery.
+  </p>
+
   [Demo](https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery)
 
   <a href="https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery" target="_blank">
@@ -46,37 +51,33 @@ Please refer to the [lightGallery license page](https://www.lightgalleryjs.com/l
 
 # Usage
 
-Here is a simple example:
+Here is a simple example that is using the default layout (adaptive).
+Layout can be customized, by defining your own classes definition
+(as for example adding effects on hover)
 
 ```jsx
 ---
 import { LightGallery } from 'astro-lightgallery'
 ---
-
 <LightGallery
-  class="..."
+  layout={{
+    imgs: [
+      { src: "/img01.jpg", },
+      { src: "/img02.jpg", },
+      ...
+    ]
+  }}
   options={{
-    // https://www.lightgalleryjs.com/docs/settings/
     thumbnail: true,
-    autoplay: true,
-    ...
-    }}
-  addPlugins={[ ... ]}
-    // 'thumbnail', 'autoplay',...
-    // note that automatic detection is performed
-    // depending on the options
-  >
-  {
-    imgs.map(img => (
-      <a href={img.src}>
-        <img src={img.src} />
-      </a>
-    ))
-  }
-</LightGallery>
+  }}
+/>
 ```
 
 ## Complex Examples
+
+Layout can be customized. But we may also want to use
+astro-lightgallery without layouts, and use native lightgallery
+scheme.
 
 Please check the [online doc](https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery) for a fullset of examples, including navigation and thumbnails.
 
