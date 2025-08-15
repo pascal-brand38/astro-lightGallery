@@ -13,7 +13,7 @@
   </p>
 
   <p>
-    It includes some layouts to ease integration of
+    It provides some layouts to ease integration of
     lightgallery.
   </p>
 

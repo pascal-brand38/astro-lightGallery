@@ -34,15 +34,7 @@
   ],
   "keywords": [
     "lightgallery",
-    "withastro",
-    "astro-component",
-    "gallery",
-    "galleries",
-    "lightweight",
-    "touch",
-    "responsive",
-    "carousel",
-    "slider",
-    "thumbnail"
+    "withastro", "astro-component", "image",
+    "gallery", "galleries", "lightweight", "touch", "responsive", "carousel", "slider", "thumbnail"
   ]
 }
