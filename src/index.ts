@@ -5,7 +5,7 @@ import ligthGallery from 'lightgallery'
 import type { LightGallerySettings } from 'lightgallery/lg-settings';
 import type { HTMLAttributes } from 'astro/types'
 import type { LgQuery } from 'lightgallery/lgQuery'
-type LightGallery = import('lightgallery/lightgallery.d.ts').LightGallery;
+import type { LightGallery } from 'lightgallery/lightgallery';
 
 export type AstroLightGalleryPluginStrType = (
   'thumbnail' |
@@ -168,33 +168,46 @@ async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) =
   }
 }
 
-export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: AstroLightGalleryPluginStrType[]) {
+export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: AstroLightGalleryPluginStrType[]): Promise<LightGallery | undefined> {
   const plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[] = []
   const el = document.getElementById(id)
-  if (el) {
-    // automatic add plugins
-    if (options.autoplay!==undefined) { addPlugins.push('autoplay') }
-    // if (options.comment !== undefined) { addPlugins.push('comment') }
-    if (options.fullScreen !== undefined) { addPlugins.push('fullscreen') }
-    if (options.hash !== undefined) { addPlugins.push('hash') }
-    if (options.mediumZoom !== undefined) { addPlugins.push('mediumZoom') }
-    if (options.pager !== undefined) { addPlugins.push('pager') }
-    // if (options.relativeCaption !== undefined) { addPlugins.push('relativeCaption') }
-    if (options.rotate !== undefined) { addPlugins.push('rotate') }
-    if (options.share !== undefined) { addPlugins.push('share') }
-    if ((options.thumbnail!==undefined) || (options.animateThumb!==undefined)) { addPlugins.push('thumbnail') }
-    // if (options.video !== undefined) { addPlugins.push('video') }
-    // if (options.showVimeoThumbnails !== undefined) { addPlugins.push('vimeoThumbnail') }
-    if (options.zoom !== undefined) { addPlugins.push('zoom') }
-
-    // remove duplicates
-    addPlugins = [... new Set(addPlugins)]
-
-    // add plugins
-    await Promise.all(addPlugins.map(async (pluginStr) => await _addPlugin(plugins, pluginStr)))
-
-    options.plugins = plugins
-
-    ligthGallery(el, options)
+  if (!el) {
+    return undefined
   }
+
+  // automatic add plugins
+  if (options.autoplay!==undefined) { addPlugins.push('autoplay') }
+  // if (options.comment !== undefined) { addPlugins.push('comment') }
+  if (options.fullScreen !== undefined) { addPlugins.push('fullscreen') }
+  if (options.hash !== undefined) { addPlugins.push('hash') }
+  if (options.mediumZoom !== undefined) { addPlugins.push('mediumZoom') }
+  if (options.pager !== undefined) { addPlugins.push('pager') }
+  // if (options.relativeCaption !== undefined) { addPlugins.push('relativeCaption') }
+  if (options.rotate !== undefined) { addPlugins.push('rotate') }
+  if (options.share !== undefined) { addPlugins.push('share') }
+  if ((options.thumbnail!==undefined) || (options.animateThumb!==undefined)) { addPlugins.push('thumbnail') }
+  // if (options.video !== undefined) { addPlugins.push('video') }
+  // if (options.showVimeoThumbnails !== undefined) { addPlugins.push('vimeoThumbnail') }
+  if (options.zoom !== undefined) { addPlugins.push('zoom') }
+
+  // remove duplicates
+  addPlugins = [... new Set(addPlugins)]
+
+  // add plugins
+  await Promise.all(addPlugins.map(async (pluginStr) => await _addPlugin(plugins, pluginStr)))
+
+  options.plugins = plugins
+
+  const gallery = ligthGallery(el, options)
+  return gallery
+}
+
+declare class AstroLightgallery extends HTMLElement {
+  /** pointer to the Lightgallery structure that was created using "new",
+   *  even when not initialized */
+  astroLightGallery: Promise<LightGallery | undefined> | undefined
+}
+
+export function getLightGalleryFromUniqueSelector(uniqueSelector: string): Promise<LightGallery | undefined> | undefined {
+  return (document.querySelector(uniqueSelector) as AstroLightgallery)?.astroLightGallery
 }
