@@ -12,15 +12,16 @@ type Props = AstroLightGalleryType
 const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
-  id = 'astro-lightgallery-' + Math.random().toString(36).slice(2, 11),
-  class: className = '',
+  id = `astro-lightgallery-${Math.random().toString(36).slice(2, 11)}`,
+  class: className = null,
   layout,
   ...props
 } = Astro.props;
 
 const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : {}    // remove imgs from layout
-const classContainer = (layout && layout.classContainer) ? layout.classContainer : ''
-const classItem = (layout && layout.classItem) ? layout.classItem : ''
+
+const classContainer = layout?.classContainer ?? null
+const classItem = layout?.classItem ??  null
 
 // update missing informations (if any) in layout.imgs
 if (layout) {
@@ -60,7 +61,7 @@ if (layout) {
 { !Astro.slots.has('default') && (layout !== undefined) && (
   <astro-lightgallery
     id={id}
-    class={`astro-lightgallery-adaptive-container ${className} ${classContainer}`}
+    class:list={['astro-lightgallery-adaptive-container', className, classContainer]}
     {...props}
     data-options={JSON.stringify(options)}
     data-id={id}
@@ -72,7 +73,7 @@ if (layout) {
       // TODO: also use Image from astro if this is possible
       layout.imgs.map(img => (
         <a
-          class={`astro-lightgallery-adaptive-item ${classItem}`}
+          class:list={['astro-lightgallery-adaptive-item', classItem]}
           href={img.src}
           data-sub-html={(img.subHtml ? img.subHtml : '')}>
             <img src={img.srcThumb} alt={img.alt} />
