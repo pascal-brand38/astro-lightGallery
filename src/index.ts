@@ -116,7 +116,7 @@ function _textColor(text: string, color: string) {
   return colorCode + text + '\x1b[0m'
 }
 
-async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[], pluginStr: AstroLightGalleryPluginStrType) {
+async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[], pluginStr: AstroLightGalleryPluginStrType) {
   console.log(_textColor(`astro-lightgallery: add plugin ${pluginStr}`, 'FgGreen'))
   let plugin= undefined
   switch (pluginStr) {
@@ -169,7 +169,7 @@ async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) =
 }
 
 export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: AstroLightGalleryPluginStrType[]): Promise<LightGallery | undefined> {
-  const plugins: (new (instance: LightGallery, $LG: LgQuery) => any)[] = []
+  const plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[] = []
   const el = document.getElementById(id)
   if (!el) {
     return undefined
