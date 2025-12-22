@@ -39,15 +39,12 @@ type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSetti
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
 
 /** List of images, and their attributes, to be displayed in a provided layout */
-export interface AstroLightGalleryImgType {
+export interface AstroLightGalleryImgType extends Partial<Pick<HTMLAttributes<"img">, 'loading' | 'alt'>> {
   /** the source of the large image */
   src: string,
 
   /** the source of the thumbnail image. If not provided, use src (the large one) */
   srcThumb?: string
-
-  /** alt of the image */
-  alt?: string
 
   /* caption for the slide, if any */
   subHtml?:string
@@ -60,7 +57,7 @@ export interface AstroLightGalleryImgType {
  */
 export interface AstroLightGalleryLayoutType {
   /** images to be displayed in the gallery */
-  imgs: AstroLightGalleryImgType[],
+  imgs: readonly AstroLightGalleryImgType[],
 
   /** adaptive layout parameters. This is the default layout */
   adaptive?: {
@@ -93,7 +90,7 @@ export interface AstroLightGalleryType extends HTMLAttributes<"div"> {
    * note that when possible, the plugins are automatically detected
    * (for example when thumbnail=true in the options)
    */
-  addPlugins?: AstroLightGalleryPluginStrType[],
+  addPlugins?: readonly AstroLightGalleryPluginStrType[],
 
   /** to ease user experience, some default layouts are provided.
    * This ease the lightgallery usage, as only the image list and their attributes
@@ -113,12 +110,13 @@ function _textColor(text: string, color: string) {
   else if (color === 'FgYellow') { colorCode = '\x1b[33m' }
   else if (color === 'FgCyan')   { colorCode = '\x1b[36m' }
   else { colorCode = '\x1b[31m' }   // red by default
-  return colorCode + text + '\x1b[0m'
+
+  return `${colorCode + text}\x1b[0m`
 }
 
 async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[], pluginStr: AstroLightGalleryPluginStrType) {
   console.log(_textColor(`astro-lightgallery: add plugin ${pluginStr}`, 'FgGreen'))
-  let plugin= undefined
+  let plugin = undefined
   switch (pluginStr) {
     case 'thumbnail':
       plugin = await import('lightgallery/plugins/thumbnail')
