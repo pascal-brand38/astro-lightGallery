@@ -175,31 +175,34 @@ export async function createLightGallery(id: string, options: LightGallerySettin
     return undefined
   }
 
-  // automatic add plugins
-  if (options.autoplay!==undefined) { addPlugins.push('autoplay') }
-  // if (options.comment !== undefined) { addPlugins.push('comment') }
-  if (options.fullScreen !== undefined) { addPlugins.push('fullscreen') }
-  if (options.hash !== undefined) { addPlugins.push('hash') }
-  if (options.mediumZoom !== undefined) { addPlugins.push('mediumZoom') }
-  if (options.pager !== undefined) { addPlugins.push('pager') }
-  // if (options.relativeCaption !== undefined) { addPlugins.push('relativeCaption') }
-  if (options.rotate !== undefined) { addPlugins.push('rotate') }
-  if (options.share !== undefined) { addPlugins.push('share') }
-  if ((options.thumbnail!==undefined) || (options.animateThumb!==undefined)) { addPlugins.push('thumbnail') }
-  // if (options.video !== undefined) { addPlugins.push('video') }
-  // if (options.showVimeoThumbnails !== undefined) { addPlugins.push('vimeoThumbnail') }
-  if (options.zoom !== undefined) { addPlugins.push('zoom') }
+  const pluginMappings: { condition: boolean; plugin: AstroLightGalleryPluginStrType }[] = [
+    { condition: options.autoplay !== undefined, plugin: 'autoplay' },
+    { condition: options.fullScreen !== undefined, plugin: 'fullscreen' },
+    { condition: options.hash !== undefined, plugin: 'hash' },
+    { condition: options.mediumZoom !== undefined, plugin: 'mediumZoom' },
+    { condition: options.pager !== undefined, plugin: 'pager' },
+    { condition: options.rotate !== undefined, plugin: 'rotate' },
+    { condition: options.share !== undefined, plugin: 'share' },
+    { condition: options.thumbnail !== undefined || options.animateThumb !== undefined, plugin: 'thumbnail' },
+    { condition: options.zoom !== undefined, plugin: 'zoom' },
+    // Commented out plugins that need specific option checks:
+    // { condition: options.comment !== undefined, plugin: 'comment' },
+    // { condition: options.relativeCaption !== undefined, plugin: 'relativeCaption' },
+    // { condition: options.video !== undefined, plugin: 'video' },
+    // { condition: options.showVimeoThumbnails !== undefined, plugin: 'vimeoThumbnail' },
+  ]
 
-  // remove duplicates
-  addPlugins = [... new Set(addPlugins)]
+  pluginMappings
+    .filter(mapping => mapping.condition)
+    .forEach(mapping => { addPlugins.push(mapping.plugin) })
 
-  // add plugins
-  await Promise.all(addPlugins.map(async (pluginStr) => await _addPlugin(plugins, pluginStr)))
+  // resolve plugins
+  await Promise.all([... new Set(addPlugins)]
+    .map(async (pluginStr) => await _addPlugin(plugins, pluginStr)))
 
   options.plugins = plugins
 
-  const gallery = ligthGallery(el, options)
-  return gallery
+  return ligthGallery(el, options)
 }
 
 declare class AstroLightgallery extends HTMLElement {
