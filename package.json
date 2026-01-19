@@ -4,6 +4,7 @@
   "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries and carousel (including thumbnail) for the web and the mobile",
   "main": "index.js",
   "scripts": {
+    "format": "prettier -w \"**/*\" --ignore-unknown",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,8 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "astro": "^5.9.2",
+    "prettier": "^3.8.0",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.8.3"
   },
   "exports": {
@@ -34,7 +37,16 @@
   ],
   "keywords": [
     "lightgallery",
-    "withastro", "astro-component", "image",
-    "gallery", "galleries", "lightweight", "touch", "responsive", "carousel", "slider", "thumbnail"
+    "withastro",
+    "astro-component",
+    "image",
+    "gallery",
+    "galleries",
+    "lightweight",
+    "touch",
+    "responsive",
+    "carousel",
+    "slider",
+    "thumbnail"
   ]
 }
