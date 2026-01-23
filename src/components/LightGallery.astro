@@ -13,7 +13,7 @@ const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
   id = `astro-lightgallery-${Math.random().toString(36).slice(2, 11)}`,
-  class: className = null,
+  class: className,
   layout,
   ...props
 } = Astro.props;
@@ -23,24 +23,11 @@ const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : {}    // remove i
 const classContainer = layout?.classContainer ?? null
 const classItem = layout?.classItem ??  null
 
-// update missing informations (if any) in layout.imgs
-if (layout) {
-  layout.imgs.forEach(img => {
-    if (!img.srcThumb) {
-      img.srcThumb = img.src
-    }
-    if (!img.alt) {
-      img.alt = ''
-    }
-  })
-}
-
 ---
 <!-- slot is provided, that means that the user is using his gallery layout
      only provide lightgallery setup
   -->
 { Astro.slots.has('default') && (
-
   <astro-lightgallery
     id={id}
     class={className}
@@ -52,13 +39,13 @@ if (layout) {
     >
       <slot />
   </astro-lightgallery>
-) }
+)}
 
 <!-- slot is not provided, that means that the user is using the gallery layout of astro-gallery
      the description of this layout is provided in layout, including the images
   -->
 
-{ !Astro.slots.has('default') && (layout !== undefined) && (
+{!Astro.slots.has('default') && (layout !== undefined) && (
   <astro-lightgallery
     id={id}
     class:list={['astro-lightgallery-adaptive-container', className, classContainer]}
@@ -68,20 +55,23 @@ if (layout) {
     data-addplugins={JSON.stringify(addPlugins)}
     data-param-layout={JSON.stringify(paramLayout)}
     >
-
     {
-      // TODO: also use Image from astro if this is possible
+      // TODO: use Image from astro if this is possible
       layout.imgs.map(img => (
         <a
           class:list={['astro-lightgallery-adaptive-item', classItem]}
           href={img.src}
           data-sub-html={(img.subHtml ? img.subHtml : '')}>
-            <img src={img.srcThumb} alt={img.alt} />
+            <img 
+              src={img?.srcThumb ?? img.src} 
+              alt={img?.alt ?? ''} 
+              loading={img.loading ?? 'lazy'} 
+            />
         </a>
       ))
     }
   </astro-lightgallery>
-) }
+)}
 
 
 <script>
