@@ -99,21 +99,52 @@ if (layout) {
       super();
       this.astroLightGallery = undefined
 
-      // Read the message from the data attribute.
-      const options: LightGallerySettings = JSON.parse(this.dataset.options || '{}')
-      const id = this.dataset.id || ''
-      const addPlugins: AstroLightGalleryPluginStrType[] = JSON.parse(this.dataset.addplugins!)
-      const paramLayout = JSON.parse(this.dataset.paramLayout!)
-      this.astroLightGallery = createLightGallery(id, options, addPlugins)
+      try {
+        // Parse data attributes with fallbacks and validation
+        const options: LightGallerySettings = this.parseDataAttribute('options', {})
+        const id = this.dataset.id
+        const addPlugins: AstroLightGalleryPluginStrType[] = this.parseDataAttribute('addplugins', [])
+        const paramLayout = this.parseDataAttribute('paramLayout', {})
 
-      const elm = document.querySelector<HTMLElement>(`#${id}`)!;
-      if ((paramLayout.adaptive !== undefined) && (paramLayout.adaptive.zoom !== undefined)) {
-        elm.style.setProperty("--zoom", paramLayout.adaptive.zoom.toString());
-      } else {
-        elm.style.setProperty("--zoom", "100");
+        if (!id) {
+          console.error('AstroLightGallery: Missing required id attribute')
+          return
+        }
+
+        this.astroLightGallery = createLightGallery(id, options, addPlugins)
+
+        this.setZoomProperty(id, paramLayout)
+
+      } catch (error) {
+        console.error('AstroLightGallery initialization failed:', error)
       }
+    }
+
+    // method to reduce duplication
+    private parseDataAttribute<T>(attributeName: string, fallback: T): T {
+      try {
+        const value = this.dataset[attributeName]
+        return value ? JSON.parse(value) : fallback
+      } catch (error) {
+        console.warn(`AstroLightGallery: Failed to parse ${attributeName}, using fallback:`, error)
+        return fallback
+      }
+    }
+
+    private setZoomProperty(id: string, paramLayout: any): void {
+      const element = document.querySelector<HTMLElement>(`#${id}`)
+      if (!element) {
+        console.warn(`AstroLightGallery: Element with id "${id}" not found`)
+        return
+      }
+
+      const zoom = (paramLayout?.adaptive?.zoom ?? 100).toString()
+      element.style.setProperty("--zoom", zoom)
     }
   }
 
-  customElements.get('astro-lightgallery') || customElements.define('astro-lightgallery', AstroLightGallery);
+  // Register custom element if not already defined
+  if (!customElements.get('astro-lightgallery')) {
+    customElements.define('astro-lightgallery', AstroLightGallery)
+  }
 </script>
