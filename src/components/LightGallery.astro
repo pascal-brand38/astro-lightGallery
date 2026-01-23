@@ -12,7 +12,7 @@ type Props = AstroLightGalleryType
 const {
   options = {},     // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
-  id = `astro-lightgallery-${crypto.randomUUID().replace(/-/g, '_')}`,
+  id = `astro-lightgallery-${crypto.randomUUID()}`,
   class: className = null,
   layout,
   ...props
