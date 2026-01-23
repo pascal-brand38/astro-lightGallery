@@ -21,7 +21,7 @@ export type AstroLightGalleryPluginStrType = (
   'video' |
   'vimeoThumbnail' |
   'zoom'
-  )
+)
 
 /**
  * Fix in atro-lightgallery missing plugin settings in LightGallerySettings
@@ -39,15 +39,11 @@ type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSetti
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
 
 /** List of images, and their attributes, to be displayed in a provided layout */
-export interface AstroLightGalleryImgType extends Partial<Pick<HTMLAttributes<"img">, 'loading' | 'alt'>> {
-  /** the source of the large image */
-  src: string,
-
+export interface AstroLightGalleryImgType extends Partial<Pick<HTMLAttributes<"img">, 'src' | 'loading' | 'alt'>> {
   /** the source of the thumbnail image. If not provided, use src (the large one) */
   srcThumb?: string
-
   /* caption for the slide, if any */
-  subHtml?:string
+  subHtml?: string
 }
 
 /** Layout parameters, when the user wants to use an existing layout
@@ -64,7 +60,7 @@ export interface AstroLightGalleryLayoutType {
     /** zoom factor (100 by default) to enlarge or reduce the gallery
      * with respect to the original size provided by the layout
      */
-    zoom?:number,
+    zoom?: number,
   }
 
   /** classContainer, to be defined by the user in case he wants
@@ -104,20 +100,21 @@ export { default as LightGallery } from './components/LightGallery.astro'
 
 function _textColor(text: string, color: string) {
   let colorCode: string
-  if      (color === 'FgRed')    { colorCode = '\x1b[31m' }
-  else if (color === 'FgBlue')   { colorCode = '\x1b[34m' }
-  else if (color === 'FgGreen')  { colorCode = '\x1b[32m' }
+  if (color === 'FgRed') { colorCode = '\x1b[31m' }
+  else if (color === 'FgBlue') { colorCode = '\x1b[34m' }
+  else if (color === 'FgGreen') { colorCode = '\x1b[32m' }
   else if (color === 'FgYellow') { colorCode = '\x1b[33m' }
-  else if (color === 'FgCyan')   { colorCode = '\x1b[36m' }
+  else if (color === 'FgCyan') { colorCode = '\x1b[36m' }
   else { colorCode = '\x1b[31m' }   // red by default
 
   return `${colorCode + text}\x1b[0m`
 }
 
-async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[], pluginStr: AstroLightGalleryPluginStrType) {
-  console.log(_textColor(`astro-lightgallery: add plugin ${pluginStr}`, 'FgGreen'))
-  let plugin = undefined
-  switch (pluginStr) {
+async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[], pluginType: AstroLightGalleryPluginStrType) {
+  console.log(_textColor(`astro-lightgallery: add plugin ${pluginType}`, 'FgGreen'))
+  let plugin = undefined;
+  
+  switch (pluginType) {
     case 'thumbnail':
       plugin = await import('lightgallery/plugins/thumbnail')
       break
@@ -158,18 +155,19 @@ async function _addPlugin(plugins: (new (instance: LightGallery, $LG: LgQuery) =
       plugin = await import('lightgallery/plugins/zoom')
       break
     default:
-      console.log(_textColor(`astro-lightgallery: failed adding unknown plugin ${pluginStr}`, 'FgRed'))
+      console.log(_textColor(`astro-lightgallery: failed adding unknown plugin ${pluginType}`, 'FgRed'))
       break
   }
-  if (plugin !== undefined) {
-    plugins.push(plugin.default)
+
+  if (plugin != null){
+     plugins.push(plugin.default)
   }
 }
 
 export async function createLightGallery(id: string, options: LightGallerySettings, addPlugins: AstroLightGalleryPluginStrType[]): Promise<LightGallery | undefined> {
   const plugins: (new (instance: LightGallery, $LG: LgQuery) => unknown)[] = []
   const el = document.getElementById(id)
-  if (!el) {
+  if (!el){
     return undefined
   }
 
