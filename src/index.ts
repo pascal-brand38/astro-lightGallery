@@ -39,7 +39,9 @@ type LightGalleryAllSettingsFix = LightGalleryAllSettings & RelativeCaptionSetti
 type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
 
 /** List of images, and their attributes, to be displayed in a provided layout */
-export interface AstroLightGalleryImgType extends Partial<Pick<HTMLAttributes<"img">, 'src' | 'loading' | 'alt'>> {
+export interface AstroLightGalleryImgType extends Partial<Pick<HTMLAttributes<"img">, 'loading' | 'alt'>> {
+    /** the source of the large image */
+  src: string,
   /** the source of the thumbnail image. If not provided, use src (the large one) */
   srcThumb?: string
   /* caption for the slide, if any */
