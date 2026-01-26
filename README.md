@@ -37,6 +37,7 @@ npm install astro-lightgallery
 The package automatically includes the required lightGallery CSS and provides TypeScript definitions.
 
 ## License
+
 Astro-lightGallery is released under the MIT license.
 
 Astro-lightGallery is using [lightGallery](https://github.com/sachinchoolur/lightGallery).
@@ -44,7 +45,6 @@ lightGallery is a **free and open-source library**, however,
 if you are using the library for business, commercial sites, projects,
 and applications, choose the **commercial license** to keep your source proprietary, to yourself.
 Please refer to the [lightGallery license page](https://www.lightgalleryjs.com/license/).
-
 
 ## Usage
 
@@ -152,18 +152,19 @@ The adaptive layout automatically adjusts to different screen sizes and supports
 You can access the lightGallery instance programmatically:
 
 ```javascript
-import { getLightGalleryFromUniqueSelector } from 'astro-lightgallery'
+import { getLightGalleryFromUniqueSelector } from 'astro-lightgallery';
 
 // Get the lightGallery instance
-const lgInstance = await getLightGalleryFromUniqueSelector('#my-gallery-id')
+const lgInstance = await getLightGalleryFromUniqueSelector('#my-gallery-id');
 if (lgInstance) {
-  lgInstance.openGallery(0) // Open at first image
+  lgInstance.openGallery(0); // Open at first image
 }
 ```
 
 ### Styling
 
 The component includes responsive CSS that adapts to different screen sizes:
+
 - Desktop: Flexible height based on viewport (20vh by default)
 - Portrait mode: Adjusted height (15vh)
 - Small screens: Full-width layout with constrained height
@@ -174,6 +175,7 @@ Custom styling can be applied through the `class`, `classContainer`, and `classI
 ### Examples
 
 Please check the [Astro-lightgallery online documentation](https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery) for a complete set of examples, including:
+
 - Navigation controls
 - Thumbnail galleries
 - Custom layouts
