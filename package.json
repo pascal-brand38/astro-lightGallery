@@ -3,8 +3,10 @@
   "version": "2.3.0",
   "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries and carousel (including thumbnail) for the web and the mobile",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "format": "prettier -w \"**/*\" --ignore-unknown",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,11 +20,14 @@
   },
   "homepage": "https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery",
   "dependencies": {
-    "lightgallery": "^2.9.0-beta.1"
+    "lightgallery": "^2.9.0-beta.1",
+    "typescript-eslint": "^8.54.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "astro": "^5.9.2",
+    "eslint": "^9.39.2",
+    "eslint-plugin-regexp": "^3.0.0",
     "prettier": "^3.8.0",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.8.3"
