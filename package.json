@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "format": "prettier -w \"**/*\" --ignore-unknown",
-    "lint": "eslint .",
+    "lint": "biome lint && eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,17 +20,18 @@
   },
   "homepage": "https://pascal-brand38.github.io/astro-dev/packages/astro-lightgallery",
   "dependencies": {
-    "lightgallery": "^2.9.0-beta.1",
-    "typescript-eslint": "^8.54.0"
+    "lightgallery": "^2.9.0-beta.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.13",
     "@types/node": "^24.0.0",
     "astro": "^5.9.2",
     "eslint": "^9.39.2",
     "eslint-plugin-regexp": "^3.0.0",
     "prettier": "^3.8.0",
     "prettier-plugin-astro": "^0.14.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.54.0"
   },
   "exports": {
     ".": "./index.ts",
