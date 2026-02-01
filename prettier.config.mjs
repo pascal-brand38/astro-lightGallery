@@ -1,6 +1,6 @@
 /** @type {import("prettier").Config} */
 export default {
-  endOfLine: 'auto',
+  endOfLine: 'lf',
   printWidth: 100,
   semi: true,
   singleQuote: true,
@@ -9,12 +9,6 @@ export default {
   useTabs: false,
   plugins: ['prettier-plugin-astro'],
   overrides: [
-    {
-      files: ['.*', '*.md', '*.toml', '*.yml'],
-      options: {
-        useTabs: false,
-      },
-    },
     {
       files: ['**/*.astro'],
       options: {
