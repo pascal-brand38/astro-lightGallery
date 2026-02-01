@@ -1,0 +1,23 @@
+#
+# from https://docs.github.com/fr/get-started/git-basics/configuring-git-to-handle-line-endings?platform=linux
+# Ensure consistent line endings for text files
+#
+# check line endings using
+#    git ls-files --eol
+# check file that have the wrong line endings using
+#    git ls-files --eol | grep crlf
+#
+# normalize all line endings following the rules in this file using
+#    git add --renormalize .
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=lf
+
+# Declare files that will always have LF line endings on checkout.
+*.astro text
+*.css text
+*.md text
+*.json text
+*.jsonc text
+*.mjs text
+*.ts text
