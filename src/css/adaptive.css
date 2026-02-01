@@ -30,7 +30,7 @@
   vertical-align: bottom;
 }
 
-@media (max-aspect-ratio: 1/1) {
+@media (max-aspect-ratio: 1 / 1) {
   .astro-lightgallery-adaptive-item {
     height: calc(15vh * var(--zoom, 100) / 100);
   }
@@ -46,7 +46,7 @@
 
 /* Smaller screens in portrait */
 
-@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+@media (max-aspect-ratio: 1 / 1) and (max-width: 480px) {
   .astro-lightgallery-adaptive-container {
     flex-direction: row;
   }
