@@ -30,11 +30,16 @@
     "typescript": "^5.8.3"
   },
   "exports": {
-    ".": "./index.ts",
+    ".": {
+      "types": "./index.ts",
+      "default": "./index.ts"
+    },
+    "./lightgallery": "./lightgallery.ts",
     "./css/*.css": "./src/css/*.css"
   },
   "files": [
     "index.ts",
+    "lightgallery.ts",
     "src/**"
   ],
   "keywords": [
