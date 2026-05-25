@@ -15,10 +15,13 @@ const {
   img,
 } = Astro.props;
 
+const height = '45vw';
+const maxHeight = '325px';
+
 ---
 
 <a
-  class={className}
+  class:list={[className]}
   href={img.src}
   data-sub-html={img.subHtml ? img.subHtml : ''}
 >
@@ -28,3 +31,30 @@ const {
     loading={img.loading ?? 'lazy'}
   />
 </a>
+
+<style define:vars={{height, maxHeight}}>
+.astro-lightgallery-google-photos-item {
+  flex-grow: 1;
+  margin: 2px;
+  width: auto;
+}
+
+.astro-lightgallery-google-photos-item img {
+  height: var(--height);
+  max-height: var(--maxHeight);
+  object-fit: cover;
+  vertical-align: bottom;
+  width: 100%;
+}
+</style>
+
+<script>
+  // var style = document.createElement('style');
+  // style.innerHTML = '@media (min-width: 601px) {' +
+  //   '.toto img {' +
+  //   'height: 20vw;' +
+  //   'max-height: 205px;' +
+  //   '}' +
+  //   '}';
+  // document.head.appendChild(style);
+</script>
