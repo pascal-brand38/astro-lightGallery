@@ -56,6 +56,9 @@ export interface AstroLightGalleryImgType
  * layout, ...
  */
 export interface AstroLightGalleryLayoutType {
+  /** type of the layout. @default 'adaptive' */
+  type: 'adaptive';
+
   /** images to be displayed in the gallery */
   imgs: readonly AstroLightGalleryImgType[];
 

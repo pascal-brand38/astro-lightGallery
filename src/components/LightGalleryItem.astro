@@ -1,0 +1,30 @@
+---
+// Copyright (c) Pascal Brand
+// MIT License
+
+import type { AstroLightGalleryImgType } from '../index';
+import '../css/adaptive.css';
+
+type Props = {
+  img: AstroLightGalleryImgType,
+  class?: string;
+};
+
+const {
+  class: className,
+  img,
+} = Astro.props;
+
+---
+
+<a
+  class={className}
+  href={img.src}
+  data-sub-html={img.subHtml ? img.subHtml : ''}
+>
+  <img
+    src={img?.srcThumb ?? img.src}
+    alt={img?.alt ?? ''}
+    loading={img.loading ?? 'lazy'}
+  />
+</a>

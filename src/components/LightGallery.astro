@@ -3,10 +3,9 @@
 // MIT License
 
 import 'lightgallery/css/lightgallery-bundle.css';
-import 'astro-lightgallery/css/adaptive.css';
 
 import type { AstroLightGalleryType } from '../index';
-
+import LightGalleryItem from './LightGalleryItem.astro';
 type Props = AstroLightGalleryType;
 
 const {
@@ -20,62 +19,39 @@ const {
 
 const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : {}; // remove imgs from layout
 
+const layoutType = (layout ? (layout.type ?? 'adaptive') : null);
+
+const useSlot = Astro.slots.has('default') || !layout;
+if (!useSlot && !layoutType) {
+  console.warn(
+    'AstroLightGallery: Neither layout nor slot available. To remove this warning, provide a layout or use a slot.',
+  );
+}
+if (useSlot && layoutType) {
+  console.warn(
+    'AstroLightGallery: Both layout and slot are provided. Only one should be used. Slot is used.To remove this warning, provide either a layout or use a slot.',
+  );
+}
+
+const layoutClassContainer = layoutType ? `astro-lightgallery-${layoutType}-container` : null;
+const layoutClassItem = layoutType ? `astro-lightgallery-${layoutType}-item` : null;
 const classContainer = layout?.classContainer ?? null;
 const classItem = layout?.classItem ?? null;
+
 ---
 
-<!-- slot is provided, that means that the user is using his gallery layout
-     only provide lightgallery setup
-  -->{
-  Astro.slots.has('default') && (
-    <astro-lightgallery
-      id={id}
-      class={className}
-      {...props}
-      data-options={JSON.stringify(options)}
-      data-id={id}
-      data-addplugins={JSON.stringify(addPlugins)}
-      data-param-layout={JSON.stringify(paramLayout)}
-    >
-      <slot />
-    </astro-lightgallery>
-  )
-}
-
-<!-- slot is not provided, that means that the user is using the gallery layout of astro-gallery
-     the description of this layout is provided in layout, including the images
-  -->
-
-{
-  !Astro.slots.has('default') && layout !== undefined && (
-    <astro-lightgallery
-      id={id}
-      class:list={['astro-lightgallery-adaptive-container', className, classContainer]}
-      {...props}
-      data-options={JSON.stringify(options)}
-      data-id={id}
-      data-addplugins={JSON.stringify(addPlugins)}
-      data-param-layout={JSON.stringify(paramLayout)}
-    >
-      {
-        // TODO: use Image from astro if this is possible
-        layout.imgs.map((img) => (
-          <a
-            class:list={['astro-lightgallery-adaptive-item', classItem]}
-            href={img.src}
-            data-sub-html={img.subHtml ? img.subHtml : ''}
-          >
-            <img
-              src={img?.srcThumb ?? img.src}
-              alt={img?.alt ?? ''}
-              loading={img.loading ?? 'lazy'}
-            />
-          </a>
-        ))
-      }
-    </astro-lightgallery>
-  )
-}
+<astro-lightgallery
+  id={id}
+  class:list={[layoutClassContainer, className, classContainer]}
+  {...props}
+  data-options={JSON.stringify(options)}
+  data-id={id}
+  data-addplugins={JSON.stringify(addPlugins)}
+  data-param-layout={JSON.stringify(paramLayout)}
+>
+  { useSlot && <slot /> }
+  { !useSlot &&  layout.imgs.map((img) => <LightGalleryItem img={img} class:list={[layoutClassItem, classItem]} />) }
+</astro-lightgallery>
 
 <script>
   import { createLightGallery } from '../index';
