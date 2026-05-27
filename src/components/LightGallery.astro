@@ -11,7 +11,7 @@ type Props = AstroLightGalleryType;
 const {
   options = {}, // https://www.lightgalleryjs.com/docs/settings/
   addPlugins = [],
-  id = `astro-lightgallery-${Math.random().toString(36).slice(2, 11)}`,
+  id = `astro-lightgallery-id-${Math.random().toString(36).slice(2, 11)}`,
   class: className,
   layout,
   ...props
@@ -37,6 +37,9 @@ const layoutClassContainer = layoutType ? `astro-lightgallery-${layoutType}-cont
 const layoutClassItem = layoutType ? `astro-lightgallery-${layoutType}-item` : null;
 const classContainer = layout?.classContainer ?? null;
 const classItem = layout?.classItem ?? null;
+
+const googlePhotosHeight = layout?.googlePhotos?.height ?? '45vw';
+const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHeight;
 
 ---
 
@@ -120,10 +123,38 @@ const classItem = layout?.classItem ?? null;
   }
 </script>
 
-<style>
-.astro-lightgallery-google-photos-container {
+<style define:vars={{ googlePhotosHeight, googlePhotosMaxHeight }} is:global>
+[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container {
   display: flex;
   flex-wrap: wrap;
   flex-basis: 0;
 }
+
+[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item {
+  flex-grow: 1;
+  margin: 2px;
+  width: auto;
+}
+
+[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {
+  height: var(--googlePhotosHeight);
+  max-height: var(--googlePhotosMaxHeight);
+  object-fit: cover;
+  vertical-align: bottom;
+  width: 100%;
+}
 </style>
+
+<script is:inline define:vars={{layout, id, layoutClassItem}}>
+  if (layout?.type === 'google-photos') {
+    let style = document.createElement('style');
+    style.innerHTML =
+      `@media (min-width: 601px) {` +
+      `  #${id}.astro-lightgallery-google-photos-item img {` +
+      `    height: 20vw;` +
+      `    max-height: 205px;` +
+      `  }` +
+      `}`;
+    document.head.appendChild(style);
+  }
+</script>
