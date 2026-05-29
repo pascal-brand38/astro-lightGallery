@@ -85,16 +85,17 @@ export interface AstroLightGalleryLayoutType {
     maxHeight?: string;
 
     /** the breakpoints in pixel to switch to the default layout (adaptive) for larger screens
-     * @default no breakpoint, so that the google photos layout is used for all screen sizes if height and maxHeight are not provided
-     * and otherwise breakpoints: { 601: { height: '20vw', maxHeight: '205px' } } , so taht for
+     * @default When googlePhotos parameters are not provided, the default breakpoint is:
+     * breakpoints: { 601: { height: '20vw', maxHeight: '205px' } } , so that for
      * screen width >= 601px, the height and maxHeight will be set to 20vw and 205px respectively,
-     * and for smaller screens, the default height and maxHeight will be used
+     * and for smaller screens, the default height and maxHeight will be used.
+     * When googlePhotos is provided, no breakpoint apply by default.
     */
     breakpoints?: {
       /** height and max height for the breakpoint, which applies for window width >= breakpoint px */
       '@0.00': {
-        height?: string;
-        maxHeight?: string;
+        height: string;
+        maxHeight: string;
       };
     }
   };

@@ -38,6 +38,7 @@ const layoutClassItem = layoutType ? `astro-lightgallery-${layoutType}-item` : n
 const classContainer = layout?.classContainer ?? null;
 const classItem = layout?.classItem ?? null;
 
+// google photos css style variables with fallbacks
 const googlePhotosHeight = layout?.googlePhotos?.height ?? '45vw';
 const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHeight;
 
@@ -147,14 +148,24 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
 
 <script is:inline define:vars={{layout, id, layoutClassItem}}>
   if (layout?.type === 'google-photos') {
-    let style = document.createElement('style');
-    style.innerHTML =
-      `@media (min-width: 601px) {` +
-      `  #${id}.astro-lightgallery-google-photos-item img {` +
-      `    height: 20vw;` +
-      `    max-height: 205px;` +
-      `  }` +
-      `}`;
-    document.head.appendChild(style);
+    let breakpoints = layout.googlePhotos?.breakpoints;
+    if (!layout.googlePhotos) {
+      // default breakpoint for google photos layout if height and maxHeight are not provided
+      breakpoints = { 601: { height: '20vw', maxHeight: '205px' } };
+    }
+    if (breakpoints) {
+      let style = document.createElement('style');
+      style.innerHTML = '';
+      for (const [breakpoint, values] of Object.entries(breakpoints)) {
+        style.innerHTML +=
+          `@media (min-width: ${breakpoint}px) {` +
+          `  #${id}.astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {` +
+          `    height: ${values.height};` +
+          `    max-height: ${values.maxHeight};` +
+          `  }` +
+          `}`;
+      }
+      document.head.appendChild(style);
+    }
   }
 </script>
