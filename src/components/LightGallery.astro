@@ -16,6 +16,7 @@ const {
   layout,
   ...props
 } = Astro.props;
+const uniqueClass = `astro-lightgallery-class-${Math.random().toString(36).slice(2, 11)}`;
 
 const paramLayout = layout ? (({ imgs, ...o }) => o)(layout) : {}; // remove imgs from layout
 
@@ -46,7 +47,7 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
 
 <astro-lightgallery
   id={id}
-  class:list={[layoutClassContainer, className, classContainer]}
+  class:list={[uniqueClass,layoutClassContainer, className, classContainer]}
   {...props}
   data-options={JSON.stringify(options)}
   data-id={id}
@@ -125,19 +126,19 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
 </script>
 
 <style define:vars={{ googlePhotosHeight, googlePhotosMaxHeight }} is:global>
-[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container {
+[class^="astro-lightgallery-class-"].astro-lightgallery-google-photos-container {
   display: flex;
   flex-wrap: wrap;
   flex-basis: 0;
 }
 
-[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item {
+[class^="astro-lightgallery-class-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item {
   flex-grow: 1;
   margin: 2px;
   width: auto;
 }
 
-[id^="astro-lightgallery-id-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {
+[class^="astro-lightgallery-class-"].astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {
   height: var(--googlePhotosHeight);
   max-height: var(--googlePhotosMaxHeight);
   object-fit: cover;
@@ -146,7 +147,7 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
 }
 </style>
 
-<script is:inline define:vars={{layout, id, layoutClassItem}}>
+<script is:inline define:vars={{layout, uniqueClass, layoutClassItem}}>
   if (layout?.type === 'google-photos') {
     let breakpoints = layout.googlePhotos?.breakpoints;
     if (!layout.googlePhotos) {
@@ -159,7 +160,7 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
       for (const [breakpoint, values] of Object.entries(breakpoints)) {
         style.innerHTML +=
           `@media (min-width: ${breakpoint}px) {` +
-          `  #${id}.astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {` +
+          `  .${uniqueClass}.astro-lightgallery-google-photos-container .astro-lightgallery-google-photos-item img {` +
           `    height: ${values.height};` +
           `    max-height: ${values.maxHeight};` +
           `  }` +
