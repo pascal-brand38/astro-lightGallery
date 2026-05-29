@@ -87,7 +87,7 @@ export interface AstroLightGalleryLayoutType {
     /** the breakpoints in pixel to switch to the default layout (adaptive) for larger screens */
     breakpoints?: {
       /** height and max height for the breakpoint, which applies for window width >= breakpoint px */
-      '@0.00': {
+      [key: number]: {
         height: string;
         maxHeight: string;
       };
