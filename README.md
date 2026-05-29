@@ -174,7 +174,7 @@ which is the same as
       height: '45vw',
       maxHeight: '45vw',
       breakpoints: {
-        601: { height: '20vw', maxHeight: '205px' };
+        601: { height: '20vw', maxHeight: '205px' },
       }
     }
   }}
