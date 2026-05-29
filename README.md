@@ -82,7 +82,7 @@ The `LightGallery` component accepts the following props:
     as responsive)
   - `imgs`: Array of image objects with `src`, optional `srcThumb`, `alt`, and `subHtml`
   - `adaptive.zoom`: Zoom factor (default: 100) to scale the gallery
-  - `googlePhotos`: google photos layout parameters (cf. TODO)
+  - `googlePhotos`: google photos layout parameters (cf. [Google Photos Layout Customization](https://github.com/pascal-brand38/astro-lightGallery#google-photo-layout-customization))
   - `classContainer`: Custom CSS class for the container
   - `classItem`: Custom CSS class for individual items
 
