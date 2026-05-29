@@ -41,7 +41,7 @@ const classItem = layout?.classItem ?? null;
 
 // google photos css style variables with fallbacks
 const googlePhotosHeight = layout?.googlePhotos?.height ?? '45vw';
-const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHeight;
+const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? '45vw';
 
 ---
 
@@ -151,7 +151,7 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? googlePhotosHei
   if (layout?.type === 'google-photos') {
     let breakpoints = layout.googlePhotos?.breakpoints;
     if (!layout.googlePhotos) {
-      // default breakpoint for google photos layout if height and maxHeight are not provided
+      // default breakpoint for google photos layout no google photos parameters are provided
       breakpoints = { 601: { height: '20vw', maxHeight: '205px' } };
     }
     if (breakpoints) {

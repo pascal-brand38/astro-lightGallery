@@ -70,27 +70,21 @@ export interface AstroLightGalleryLayoutType {
     zoom?: number;
   };
 
-  /** google photos layout parameters */
+  /** google photos layout parameters
+   *
+   */
   googlePhotos?: {
     /** height of each image in the gallery.
-     * @default '45vw' (45% of the viewport width)
      * @example '200px', '45vw'...
      */
-    height?: string;
+    height: string;
 
     /** max height of each image in the gallery.
-     * @default same as height (so that the image is not enlarged), but can be set to a lower value to avoid too large images
      * @example '200px', '45vw'...
      */
-    maxHeight?: string;
+    maxHeight: string;
 
-    /** the breakpoints in pixel to switch to the default layout (adaptive) for larger screens
-     * @default When googlePhotos parameters are not provided, the default breakpoint is:
-     * breakpoints: { 601: { height: '20vw', maxHeight: '205px' } } , so that for
-     * screen width >= 601px, the height and maxHeight will be set to 20vw and 205px respectively,
-     * and for smaller screens, the default height and maxHeight will be used.
-     * When googlePhotos is provided, no breakpoint apply by default.
-    */
+    /** the breakpoints in pixel to switch to the default layout (adaptive) for larger screens */
     breakpoints?: {
       /** height and max height for the breakpoint, which applies for window width >= breakpoint px */
       '@0.00': {

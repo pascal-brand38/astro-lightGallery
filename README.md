@@ -78,8 +78,11 @@ import { LightGallery } from 'astro-lightgallery'
 The `LightGallery` component accepts the following props:
 
 - **`layout`** (optional): Configuration for the built-in adaptive layout
+  - `type`: Accepted values are `adaptive` (default) or `google-photos` (preferred one
+    as responsive)
   - `imgs`: Array of image objects with `src`, optional `srcThumb`, `alt`, and `subHtml`
   - `adaptive.zoom`: Zoom factor (default: 100) to scale the gallery
+  - `googlePhotos`: google photos layout parameters (cf. TODO)
   - `classContainer`: Custom CSS class for the container
   - `classItem`: Custom CSS class for individual items
 
@@ -136,7 +139,6 @@ import { LightGallery } from 'astro-lightgallery'
 The adaptive layout automatically adjusts to different screen sizes and supports zoom customization:
 
 ```jsx
-
 <LightGallery
   layout={{
     imgs: [...],
@@ -146,6 +148,45 @@ The adaptive layout automatically adjusts to different screen sizes and supports
   }}
 />
 ```
+
+#### Google Photo Layout Customization
+
+Google photos layout reflect the layout used on Google Photos.
+The main pro over the `adaptive` layout is that it is responsive.
+
+To use it, jus use the following:
+```jsx
+<LightGallery
+  layout={{
+    type: 'google-photos',
+    imgs: [...],
+  }}
+/>
+```
+
+which is the same as
+```jsx
+<LightGallery
+  layout={{
+    type: 'google-photos',
+    imgs: [...],
+    googlePhotos: {
+      height: '45vw',
+      maxHeight: '45vw',
+      breakpoints: {
+        601: { height: '20vw', maxHeight: '205px' };
+      }
+    }
+  }}
+/>
+```
+
+This means that:
+* default height and max-height of a picture is `45vw` (45% of the viewport width)
+* on screen larger than 601px, height and max-height will be respectivelly 20vw and 205px
+
+As many breakpoints as needed can be added.
+
 
 #### Programmatic Access
 
