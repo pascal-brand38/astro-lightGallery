@@ -1,7 +1,7 @@
 {
   "name": "astro-lightgallery",
   "version": "2.5.0",
-  "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries and carousel (including thumbnail) for the web and the mobile",
+  "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries and carousel (including thumbnail) for the web and the mobile. Include Google Photos layout.",
   "main": "index.js",
   "scripts": {
     "format": "biome format --write && prettier -w \"**/*.astro\"",
