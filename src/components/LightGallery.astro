@@ -55,7 +55,7 @@ const googlePhotosMaxHeight = layout?.googlePhotos?.maxHeight ?? '45vw';
   data-param-layout={JSON.stringify(paramLayout)}
 >
   { useSlot && <slot /> }
-  { !useSlot &&  layout.imgs.map((img) => <LightGalleryItem img={img} class:list={[layoutClassItem, classItem]} />) }
+  { !useSlot &&  layout.imgs.map((img) => <LightGalleryItem img={img} class:list={[layoutClassItem, classItem]} srcs={layout.srcs} />) }
 </astro-lightgallery>
 
 <script>

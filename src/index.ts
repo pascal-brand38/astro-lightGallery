@@ -6,6 +6,7 @@ import type { LightGallerySettings } from 'lightgallery/lg-settings';
 import type { HTMLAttributes } from 'astro/types';
 import type { LgQuery } from 'lightgallery/lgQuery';
 import type { LightGallery } from 'lightgallery/lightgallery';
+import type { ImageMetadata } from 'astro';
 
 export type AstroLightGalleryPluginStrType =
   | 'thumbnail'
@@ -42,10 +43,18 @@ type LightGallerySettingsFix = Partial<LightGalleryAllSettingsFix>;
 /** List of images, and their attributes, to be displayed in a provided layout */
 export interface AstroLightGalleryImgType
   extends Partial<Pick<HTMLAttributes<'img'>, 'loading' | 'alt'>> {
-  /** the source of the large image */
+  /** the source path of the large image. It should be a remote image, or stored in public folder,
+   * when layout.srcs is not provided. Otherwise, it should be stored in the src folder,
+   * to be processed by astro assets, and optimized with the <Image> component.
+   */
   src: string;
-  /** the source of the thumbnail image. If not provided, use src (the large one) */
+
+  /** the source path of the thumbnail image. If not provided, use src (the large one).
+   * Note that when layout.srcs is provided, the thumbnail source is not necessary as
+   * the image is optimized with astro assets.
+   */
   srcThumb?: string;
+
   /* caption for the slide, if any */
   subHtml?: string;
 }
@@ -61,6 +70,17 @@ export interface AstroLightGalleryLayoutType {
 
   /** images to be displayed in the gallery */
   imgs: readonly AstroLightGalleryImgType[];
+
+  /** a record of image sources, mapping image path to their metadata.
+   * This is used to optimize the images with astro assets, and avoid
+   * loading the large image source in the src attribute of the img tag,
+   * which can cause performance issues when the large image is heavy.
+   * Astro <Image> component is used instead of <img>.
+   * Note that in such a case, images must be stored in the src folder,
+   * and not in the public one, to be processed by astro assets.
+   * @example import.meta.glob<{ default: ImageMetadata }>('/src/images/*.{jpg,webp}')
+  */
+  srcs?: Record<string, () => Promise<{ default: ImageMetadata }>>;
 
   /** adaptive layout parameters. This is the default layout */
   adaptive?: {

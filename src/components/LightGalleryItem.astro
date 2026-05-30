@@ -2,32 +2,65 @@
 // Copyright (c) Pascal Brand
 // MIT License
 //
-// TODO: add Images
 // TODO: add object-position for google photos layout
 
+import { Image, getImage } from 'astro:assets';
 import type { AstroLightGalleryImgType, } from '../index';
 import '../css/adaptive.css';
 
 type Props = {
   img: AstroLightGalleryImgType,
   class?: string;
+  srcs?: Record<string, () => Promise<{ default: ImageMetadata }>>;
 };
 
 const {
   class: className,
   img,
+  srcs,
 } = Astro.props;
+
+let srcLarge = null;
+let srcThumb = null;
+if (srcs) {
+  const s = srcs[img.src]
+  if (s) {
+    srcLarge = await getImage({ src: s(), format: "webp" })
+  } else {
+    console.warn(`AstroLightGallery: Image source ${img.src} not found in srcs.`)
+    console.warn(`To remove this warning, provide the image source in srcs or remove srcs.`);
+  }
+
+  const sThumb = srcs[img.srcThumb ?? img.src];
+  if (sThumb) {
+    srcThumb = sThumb();
+  } else {
+    console.warn(`AstroLightGallery: Thumbnail image source ${img.srcThumb ?? img.src} not found in srcs.`)
+    console.warn(`To remove this warning, provide the thumbnail image source in srcs or remove srcs.`);
+  }
+}
 
 ---
 
 <a
   class:list={[className]}
-  href={img.src}
+  href={srcLarge ? srcLarge.src : img.src}
   data-sub-html={img.subHtml ? img.subHtml : ''}
 >
-  <img
-    src={img?.srcThumb ?? img.src}
-    alt={img?.alt ?? ''}
-    loading={img.loading ?? 'lazy'}
-  />
+  { srcThumb && (
+    <Image
+      src={srcThumb}
+      alt={img?.alt ?? ''}
+      loading={img.loading ?? 'lazy'}
+      inferSize
+      layout='constrained'
+    />
+  )}
+  { !srcThumb && (
+    <img
+      src={img.srcThumb ?? img.src}
+      alt={img?.alt ?? ''}
+      loading={img.loading ?? 'lazy'}
+    />
+  )}
 </a>
