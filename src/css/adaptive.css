@@ -28,6 +28,7 @@
   min-width: 100%;
   object-fit: cover;
   vertical-align: bottom;
+  width: 100%;
 }
 
 @media (max-aspect-ratio: 1 / 1) {
