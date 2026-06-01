@@ -57,6 +57,17 @@ export interface AstroLightGalleryImgType
 
   /* caption for the slide, if any */
   subHtml?: string;
+
+  /** position of the image when not fully displayed. Is used through the css rule "object-position"
+   * (https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-position) of the image.
+   * The first value is the vertical position, and the second value is the horizontal position.
+   * @example left top for the first image to be on top-left
+   * @example right bottom for the bottom-right
+   * @example 20% 50% for the center of the image with a focus on the upper part
+   * @example 250px 125px
+   * @default: 50% 50% for the center of the image
+  */
+  position?: string;
 }
 
 /** Layout parameters, when the user wants to use an existing layout

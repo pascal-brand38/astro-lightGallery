@@ -20,6 +20,9 @@ const {
   srcs,
 } = Astro.props;
 
+// position of the point of interest of the image
+const astroLightGalleryPosition = img.position;
+
 let srcLarge = null;
 let srcThumb = null;
 if (srcs) {
@@ -46,6 +49,7 @@ if (srcs) {
   class:list={[className]}
   href={srcLarge ? srcLarge.src : img.src}
   data-sub-html={img.subHtml ? img.subHtml : ''}
+  style={astroLightGalleryPosition ? `--astroLightGalleryPosition: ${astroLightGalleryPosition};` : ''}
 >
   { srcThumb && (
     <Image
