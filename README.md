@@ -106,6 +106,7 @@ Each image in the `layout.imgs` array can have:
   srcThumb?: string,     // Optional: URL of thumbnail (defaults to src)
   alt?: string,          // Optional: Alt text for accessibility
   subHtml?: string,      // Optional: HTML caption for the image
+  loading?: 'lazy' | 'eager' // Optional: Native image loading strategy
   position?: string;    // position of the point of interest of the image, to be used with `object-position`
 }
 ```
@@ -120,7 +121,7 @@ path in `/src`, such as
 and images stored in this path to be found during the build.
 Check [this example](https://github.com/pascal-brand38/astro-dev/blob/main/src/content/docs/packages/astro-lightgallery/GooglePhotosLayout.astro)
 
-`position` is used hrough the css rule
+`position` is used through the css rule
 [object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-position)
 of the image.
 The first value is the vertical position, and the second value is the horizontal position.
