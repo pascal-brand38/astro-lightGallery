@@ -1,6 +1,6 @@
 {
   "name": "astro-lightgallery",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Astro component for lightgallery, JavaScript gallery for building beautiful image and video galleries and carousel (including thumbnail) for the web and the mobile. Include Google Photos layout.",
   "main": "index.js",
   "scripts": {
