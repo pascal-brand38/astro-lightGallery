@@ -106,9 +106,28 @@ Each image in the `layout.imgs` array can have:
   srcThumb?: string,     // Optional: URL of thumbnail (defaults to src)
   alt?: string,          // Optional: Alt text for accessibility
   subHtml?: string,      // Optional: HTML caption for the image
-  loading?: 'lazy' | 'eager' // Optional: Native image loading strategy
+  position?: string;    // position of the point of interest of the image, to be used with `object-position`
 }
 ```
+
+Images are displayed using `img` html keyword be default.
+In such a case, `img.src` must be a public path, or a url path. In order to
+use the optimized astro asset
+[<Image/>](https://docs.astro.build/fr/guides/images/#image-), `layout.srcs` must be provided as a
+[meta.glob](https://docs.astro.build/fr/guides/imports/#importmetaglob)
+path in `/src`, such as
+`import.meta.glob<{ default: ImageMetadata }>('/src/images/*.{jpg,webp}')`,
+and images stored in this path to be found during the build.
+Check [this example](https://github.com/pascal-brand38/astro-dev/blob/main/src/content/docs/packages/astro-lightgallery/GooglePhotosLayout.astro)
+
+`position` is used hrough the css rule
+[object-position](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/object-position)
+of the image.
+The first value is the vertical position, and the second value is the horizontal position.
+Example values are `left top`, `right bottom`, `20% 50%` for the center of the image
+with a focus on the upper part, and `250px 125px`.
+Default value is `50% 50%` for the center of the image.
+Check [this example](https://github.com/pascal-brand38/astro-dev/blob/main/src/content/docs/packages/astro-lightgallery/GooglePhotosLayout.astro)
 
 ### Advanced Usage
 
