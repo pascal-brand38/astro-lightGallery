@@ -9,3 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    allow:
+      # Only lightgallery will be updated
+      - dependency-name: "lightgallery"
