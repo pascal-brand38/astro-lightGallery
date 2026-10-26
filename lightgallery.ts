@@ -4,4 +4,4 @@
 // export lightgallery API
 // to be used with
 //   import type { LightGallerySettings } from 'astro-lightgallery/lightgallery';
-export type * from 'lightgallery/lg-settings';
+export type * from 'lightgallery';
